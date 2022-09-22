@@ -53,8 +53,8 @@ def insert_repo_info_db(NOME_REPO, DEVS):
             (
                 repo, 
                 developer,
-                commits,
                 commits_link,
+                commits,
                 lines_add,
                 lines_del
             ) 
@@ -70,5 +70,6 @@ def insert_repo_info_db(NOME_REPO, DEVS):
         '''
         print("Executando => ")
         print(query)
+        execute_query(query)
         
-    return execute_query(query)
+    return 1

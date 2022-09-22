@@ -17,10 +17,13 @@ parameters = sys.argv
 
 options = webdriver.ChromeOptions()
 options.add_argument("--disable-popup-blocking")
-options.add_argument("--headless")
+# options.add_argument("--headless")
 
-driver = webdriver.Chrome(service=Service(ChromeDriverManager().install()), options=options)
-
+try:
+    driver = webdriver.Chrome(service=Service(ChromeDriverManager().install()), options=options)
+except: 
+    driver = webdriver.Chrome(ChromeDriverManager().install(), options=options)
+    
 wait_120 = WebDriverWait(driver, 120)
 wait_60 = WebDriverWait(driver, 60)
 wait_30 = WebDriverWait(driver, 30)
@@ -52,7 +55,8 @@ def only_number(text):
 
 def get_devs(repo):
     driver.get(f"""{repo}/graphs/contributors""")
-    wait_30.until(EC.presence_of_element_located((By.CSS_SELECTOR, env.EL_DEVS)))
+    wait_120.until(EC.presence_of_element_located((By.CSS_SELECTOR, env.EL_DEVS)))
+    sleep(5)
     DEVS = driver.find_elements(By.CSS_SELECTOR, env.EL_DEVS)
     COMMITS = driver.find_elements(By.CSS_SELECTOR, env.EL_DEVS_COMMITS)
     LINES_ADD = driver.find_elements(By.CSS_SELECTOR, env.EL_DEVS_LINES_ADD)
